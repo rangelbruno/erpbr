@@ -35,6 +35,11 @@ class Dashboard extends CI_Controller {
 			$this->load->view('includes/footer.php');
 		}
 
+		public function inicio()
+		{
+			phpinfo();
+		}
+
 		//public function login()
 		 //{
 			//$this->load->view('includes/header.php');

@@ -22,6 +22,8 @@ class Usuario extends CI_Controller {
 		public function index()
 		{
 			//$this->verificar_sessao();
+			$this->load->view('includes/header.php');
+			$this->load->view('includes/menu.php');
 			$this->load->view('listar_usuario');
 			$this->load->view('includes/footer.php');
 		}

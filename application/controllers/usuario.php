@@ -19,12 +19,15 @@ class Usuario extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-		public function index()
+
+		public  function index()
 		{
 			//$this->verificar_sessao();
 			$this->load->view('includes/header.php');
 			$this->load->view('includes/menu.php');
-			$this->load->view('listar_usuario');
+			$variaveis['cadastros'] = $this->m_cadastros->get();
+			$this->load->view('listar_usuario', $variaveis);
+			//$this->load->view('listar_usuario');
 			$this->load->view('includes/footer.php');
 		}
 

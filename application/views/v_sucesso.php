@@ -9,8 +9,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title>Aviso - Mini-Crud com Bootstrap e CodeIgniter 3.0</title>
 	<?= link_tag('assets/bootstrap/css/bootstrap.min.css') ?>
 	<?= link_tag('assets/bootstrap/css/bootstrap-theme.min.css') ?>
+	<script language="JavaScript">
+window.location="http://localhost/erpbr/usuario";
+</script>
+
+<noscript>
+Se não for direcionado automaticamente, clique <a href="http://localhost/erpbr/usuario">aqui</a>. 
+</noscript>
 </head>
-<body>
+<body onload='window.history.back();'>
 	<div class="container">
 		<h1 class="text-center">Mensagem</h1>
 		<div class="col-md-12">
@@ -22,7 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="row text-center">
 				<?= anchor('', 'Página Inicial');  ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </body>
 </html>

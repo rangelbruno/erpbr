@@ -1,3 +1,4 @@
+
 <body>
   <div class="wrapper">
       <div class="container">
@@ -40,8 +41,8 @@
                 							<td><?= $cadastro->telefone ?></td>
                 							<td><?= $cadastro->email ?></td>
                 							<td><?= $cadastro->observacoes ?></td>
-                							<td><?= anchor("cadastro/edit/$cadastro->id", "Editar") ?>
-                								 | <a href="#" class='confirma_exclusao' data-id="<?= $cadastro->id ?>" data-nome="<?= $cadastro->nome ?>" />Excluir</a></td>
+                							<td><?= anchor("cadastro/edit/$cadastro->id", "Editar", "class='btn btn-primary waves-effect waves-light'") ?>
+                								 | <a href="#" class='confirma_exclusao btn btn-danger waves-effect waves-light' data-id="<?= $cadastro->id ?>" data-nome="<?= $cadastro->nome ?>" />Excluir</a></td>
                 						</tr>
                 						<? endforeach; ?>
                           </tbody>
@@ -54,68 +55,60 @@
           </div>
           <!-- end row -->
 
-          <div id="con-close-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                          <h4 class="modal-title">Modal Content is Responsive</h4>
-                      </div>
-                      <div class="modal-body">
-                          <div class="row">
-                              <div class="col-md-6">
-                                <form method="post" action="<?=base_url('cadastro/salvar')?>" enctype="multipart/form-data">
-                                  <div class="form-group">
-                                      <label for="field-1" class="control-label">Nome</label>
-                                      <input type="text" class="form-control" name="nome" id="nome" value="<?=set_value('nome')?>" placeholder="John">
-                                  </div>
-                              </div>
-                              <div class="col-md-6">
-                                  <div class="form-group">
-                                      <label for="field-2" class="control-label">Telefone</label>
-                                      <input type="text" class="form-control" name="telefone" id="telefone" value="<?=set_value('telefone')?>" placeholder="Telefone">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-md-12">
-                                  <div class="form-group">
-                                      <label for="field-3" class="control-label">Email</label>
-                                      <input type="text" class="form-control" name="email" id="email" class="form-control" value="<?=set_value('email')?>" placeholder="Email">
-                                  </div>
-                              </div>
-                          </div>
-
-                          <div class="row">
-                              <div class="col-md-12">
-                                  <div class="form-group no-margin">
-                                      <label for="field-7" class="control-label">Observações</label>
-                                      <textarea class="form-control autogrow" name="observacoes" id="observacoes" placeholder="Write something about yourself" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"><?=set_value('observacoes')?></textarea>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="form-group text-right">
-                            <input type="submit" value="Salvar" class="btn btn-success" />
-                          </div>
-
-
-                      </div>
-                      <div class="modal-footer">
-                          <input type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                          <input type="submit" class="btn btn-info waves-effect waves-light">Save changes</button>
-                      </div>
-                      </form>
-                  </div>
-              </div>
+          <div class="modal fade" id="modal_confirmation">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Confirmação de Exclusão</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Deseja realmente excluir o registro <strong><span id="nome_exclusao"></span></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Agora não</button>
+                  <button type="button" class="btn btn-primary waves-effect waves-light" id="btn_excluir">Sim. Acabe com ele</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
+          <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
+          <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
+
+          <script>
+
+        		var base_url = "<?= base_url(); ?>";
+
+        		$(function(){
+        			$('.confirma_exclusao').on('click', function(e) {
+        			    e.preventDefault();
+
+        			    var nome = $(this).data('nome');
+        			    var id = $(this).data('id');
+
+        			    $('#modal_confirmation').data('nome', nome);
+        			    $('#modal_confirmation').data('id', id);
+        			    $('#modal_confirmation').modal('show');
+        			});
+
+        			$('#modal_confirmation').on('show.bs.modal', function () {
+        			  var nome = $(this).data('nome');
+        			  $('#nome_exclusao').text(nome);
+        			});
+
+        			$('#btn_excluir').click(function(){
+        				var id = $('#modal_confirmation').data('id');
+        				document.location.href = base_url + "index.php/cadastro/delete/"+id;
+        			});
+        		});
+        	</script>
 
       </div> <!-- end container -->
   </div>
   <!-- end wrapper -->
 
   <!-- jQuery  -->
-  <script src="<?= base_url() ?>assets/js/jquery.min.js"></script>
-  <script src="<?= base_url() ?>assets/js/bootstrap.min.js"></script>
+
   <script src="<?= base_url() ?>assets/js/detect.js"></script>
   <script src="<?= base_url() ?>assets/js/fastclick.js"></script>
   <script src="<?= base_url() ?>assets/js/jquery.slimscroll.js"></script>

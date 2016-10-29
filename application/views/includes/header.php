@@ -11,7 +11,10 @@
         <title>Ubold - Responsive Admin Dashboard Template</title>
 
         <!--Morris Chart CSS -->
-		<link rel="stylesheet" href="assets/plugins/morris/morris.css">
+		    <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+
+        <!-- Custom box css -->
+        <link href="assets/plugins/custombox/css/custombox.css" rel="stylesheet">
 
         <!-- DataTables -->
         <link href="<?= base_url() ?>assets/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>

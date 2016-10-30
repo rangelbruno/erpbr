@@ -20,6 +20,9 @@
                         <h4 class="page-title">Dashboard</h4>
                         <p class="text-muted page-title-alt">Welcome <a href="<?= base_url() ?>usuario">Cadastrar Usuários</a> !</p>
                         <?= anchor('usuario', 'Novo Cadastro', array('class' => 'btn btn-success')); ?>
+                        <br />
+                        <p class="text-muted page-title-alt">Welcome <a href="<?= base_url() ?>computer">Cadastrar Computadores</a> !</p>
+                        <?= anchor('computer', 'Novo Cadastro', array('class' => 'btn btn-success')); ?>
                     </div>
                 </div>
 
@@ -31,8 +34,8 @@
                                 <i class="md md-attach-money text-info"></i>
                             </div>
                             <div class="text-right">
-                                <h3 class="text-dark"><b class="counter">31,570</b></h3>
-                                <p class="text-muted">Total Revenue</p>
+                                <h3 class="text-dark"><b class="counter"><?= $users->num_rows(); ?></b></h3>
+                                <p class="text-muted">Usuários</p>
                             </div>
                             <div class="clearfix"></div>
                         </div>

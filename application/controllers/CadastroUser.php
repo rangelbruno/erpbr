@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cadastro extends CI_Controller {
+class CadastroUser extends CI_Controller {
 
 	/**
 	 * Carrega o formulário para novo cadastro
@@ -23,7 +23,7 @@ class Cadastro extends CI_Controller {
 	public function salvar(){
 
 		// Recupera os contatos através do model
-		$contatos = $this->contatos_model->GetAll('nome');
+		$contatos = $this->contatos_model->GetAll('name');
 		// Passa os contatos para o array que será enviado à home
 		$dados['contatos'] =$this->contatos_model->Formatar($contatos);
 		// Executa o processo de validação do formulário
@@ -64,7 +64,7 @@ class Cadastro extends CI_Controller {
 
 		$regras = array(
 		        array(
-		                'field' => 'nome',
+		                'field' => 'name',
 		                'label' => 'Nome',
 		                'rules' => 'required'
 		        ),
@@ -79,8 +79,18 @@ class Cadastro extends CI_Controller {
 		                'rules' => 'required|valid_email'
 		        ),
 		        array(
-		                'field' => 'observacoes',
-		                'label' => 'Observações',
+		                'field' => 'username',
+		                'label' => 'Usuario',
+		                'rules' => 'required'
+		        ),
+						array(
+		                'field' => 'roles_id',
+		                'label' => 'Tipo',
+		                'rules' => 'required'
+		        ),
+						array(
+		                'field' => 'password',
+		                'label' => 'Senha',
 		                'rules' => 'required'
 		        )
 		);
@@ -99,10 +109,12 @@ class Cadastro extends CI_Controller {
 
 			$dados = array(
 
-				"nome" => $this->input->post('nome'),
+				"name" => $this->input->post('name'),
 				"telefone" => $this->input->post('telefone'),
 				"email" => $this->input->post('email'),
-				"observacoes" => $this->input->post('observacoes')
+				"username" => $this->input->post('username'),
+				"roles_id" => $this->input->post('roles_id'),
+				"password" => $this->input->post('password')
 
 			);
 			if ($this->m_cadastros->store($dados, $id)) {
@@ -125,15 +137,17 @@ class Cadastro extends CI_Controller {
 		if ($id) {
 			$this->load->view('includes/header.php');
 			$this->load->view('includes/menu.php');
-			$cadastros = $this->m_cadastros->get($id);
+			$users = $this->m_cadastros->get($id);
 
-			if ($cadastros->num_rows() > 0 ) {
+			if ($users->num_rows() > 0 ) {
 				$variaveis['titulo'] = 'Edição de Registro';
-				$variaveis['id'] = $cadastros->row()->id;
-				$variaveis['nome'] = $cadastros->row()->nome;
-				$variaveis['telefone'] = $cadastros->row()->telefone;
-				$variaveis['email'] = $cadastros->row()->email;
-				$variaveis['observacoes'] = $cadastros->row()->observacoes;
+				$variaveis['id'] = $users->row()->id;
+				$variaveis['name'] = $users->row()->name;
+				$variaveis['telefone'] = $users->row()->telefone;
+				$variaveis['email'] = $users->row()->email;
+				$variaveis['username'] = $users->row()->username;
+				$variaveis['roles_id'] = $users->row()->roles_id;
+				$variaveis['password'] = $users->row()->password;
 				$this->load->view('edit_user', $variaveis);
 				$this->load->view('includes/footer.php');
 			} else {
@@ -168,29 +182,37 @@ class Cadastro extends CI_Controller {
 		// determina as regras de validação
 		switch($operacao){
 			case 'insert':
-				$rules['nome'] = array('trim', 'required', 'min_length[3]');
+				$rules['name'] = array('trim', 'required', 'min_length[3]');
 				$rules['telefone'] = array('trim', 'required', 'min_length[3]');
 				$rules['email'] = array('trim', 'required', 'valid_email', 'is_unique[contatos.email]');
-				$rules['observacoes'] = array('trim', 'required', 'min_length[3]');
+				$rules['username'] = array('trim', 'required', 'min_length[3]');
+				$rules['roles_id'] = array('trim', 'required', 'min_length[3]');
+				$rules['password'] = array('trim', 'required', 'min_length[3]');
 				break;
 			case 'update':
-				$rules['nome'] = array('trim', 'required', 'min_length[3]');
+				$rules['name'] = array('trim', 'required', 'min_length[3]');
 				$rules['telefone'] = array('trim', 'required', 'min_length[3]');
 				$rules['email'] = array('trim', 'required', 'valid_email');
-				$rules['observacoes'] = array('trim', 'required', 'min_length[3]');
+				$rules['username'] = array('trim', 'required', 'min_length[3]');
+				$rules['roles_id'] = array('trim', 'required', 'min_length[3]');
+				$rules['password'] = array('trim', 'required', 'min_length[3]');
 				break;
 			default:
-				$rules['nome'] = array('trim', 'required', 'min_length[3]');
+				$rules['name'] = array('trim', 'required', 'min_length[3]');
 				$rules['telefone'] = array('trim', 'required', 'min_length[3]');
 				$rules['email'] = array('trim', 'required', 'valid_email', 'is_unique[contatos.email]');
-				$rules['observacoes'] = array('trim', 'required', 'min_length[3]');
+				$rules['username'] = array('trim', 'required', 'min_length[3]');
+				$rules['roles_id'] = array('trim', 'required', 'min_length[3]');
+				$rules['password'] = array('trim', 'required', 'min_length[3]');
 				break;
 		}
 
-		$this->form_validation->set_rules('nome', 'Nome', $rules['nome']);
+		$this->form_validation->set_rules('name', 'Nome', $rules['name']);
 		$this->form_validation->set_rules('telefone', 'Telefone', $rules['telefone']);
 		$this->form_validation->set_rules('email', 'Email', $rules['email']);
-		$this->form_validation->set_rules('observacoes', 'Observacoes', $rules['observacoes']);
+		$this->form_validation->set_rules('username', 'Usuario', $rules['username']);
+		$this->form_validation->set_rules('roles_id', 'Tipo', $rules['roles_id']);
+		$this->form_validation->set_rules('password', 'Senha', $rules['password']);
 
 		// Executa a validação e retorna o status
 		return $this->form_validation->run();

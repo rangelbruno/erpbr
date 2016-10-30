@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-class M_cadastros extends CI_Model {
+class C_computer extends CI_Model {
 
 	/**
 	 * Grava os dados na tabela.
@@ -14,13 +13,13 @@ class M_cadastros extends CI_Model {
 		if ($dados) {
 			if ($id) {
 				$this->db->where('id', $id);
-				if ($this->db->update("users", $dados)) {
+				if ($this->db->update("computers", $dados)) {
 					return true;
 				} else {
 					return false;
 				}
 			} else {
-				if ($this->db->insert("users", $dados)) {
+				if ($this->db->insert("computers", $dados)) {
 					return true;
 				} else {
 					return false;
@@ -32,7 +31,7 @@ class M_cadastros extends CI_Model {
 	/**
 	 * Recupera o registro do banco de dados
 	 * @param $id - Se indicado, retorna somente um registro, caso contário, todos os registros.
-	 * @return objeto da banco de dados da tabela users
+	 * @return objeto da banco de dados da tabela computers
 	 */
 	public function get($id = null){
 
@@ -40,7 +39,7 @@ class M_cadastros extends CI_Model {
 			$this->db->where('id', $id);
 		}
 		$this->db->order_by("id", 'desc');
-		return $this->db->get('users');
+		return $this->db->get('computers');
 	}
 	/**
 	 * Deleta um registro.
@@ -49,7 +48,7 @@ class M_cadastros extends CI_Model {
 	 */
 	public function delete($id = null){
 		if ($id) {
-			return $this->db->where('id', $id)->delete('users');
+			return $this->db->where('id', $id)->delete('computers');
 		}
 	}
 }

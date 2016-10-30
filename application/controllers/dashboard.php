@@ -31,7 +31,8 @@ class Dashboard extends CI_Controller {
 			//$this->verificar_sessao();
 			$this->load->view('includes/header.php');
 			$this->load->view('includes/menu.php');
-			$this->load->view('dashboard');
+			$variaveis['users'] = $this->m_cadastros->get();
+			$this->load->view('dashboard', $variaveis);
 			$this->load->view('includes/footer.php');
 		}
 

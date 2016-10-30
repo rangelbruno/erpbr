@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Usuario extends CI_Controller {
+class Computer extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -25,8 +25,8 @@ class Usuario extends CI_Controller {
 			//$this->verificar_sessao();
 			$this->load->view('includes/header.php');
 			$this->load->view('includes/menu.php');
-			$variaveis['users'] = $this->m_cadastros->get();
-			$this->load->view('listar_usuario', $variaveis);
+			$variaveis['computers'] = $this->c_computer->get();
+			$this->load->view('listar_computer', $variaveis);
 			//$this->load->view('listar_usuario');
 			$this->load->view('includes/footer.php');
 		}

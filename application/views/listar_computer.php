@@ -17,34 +17,32 @@
                 				<?= anchor('CadastroUser/create', 'Novo Cadastro', array('class' => 'btn btn-success')); ?>
 
                       <p class="text-muted font-13 m-b-30">
-                        <? if ($users->num_rows() > 0): ?>
+                        <? if ($computers->num_rows() > 0): ?>
                       </p>
 
                       <table id="datatable-buttons" class="table table-striped table-bordered">
                           <thead>
                             <tr>
                 							<th>Código</th>
-                							<th>Nome</th>
-                              <th>E-mail</th>
-                							<th>Telefone</th>
-                							<th>Username</th>
-                              <th>Tipo</th>
+                              <th>IP</th>
+                							<th>Setor</th>
+                              <th>Processador</th>
+                              <th>Memoria</th>
                 							<th>Ações</th>
                 						</tr>
                           </thead>
 
 
                           <tbody>
-                            <? foreach($users -> result() as $cadastro): ?>
+                            <? foreach($computers -> result() as $cadastro): ?>
                 						<tr>
                 							<td><?= $cadastro->id ?></td>
-                							<td><?= $cadastro->name ?></td>
-                							<td><?= $cadastro->email ?></td>
-                              <td><?= $cadastro->telefone ?></td>
-                              <td><?= $cadastro->username ?></td>
-                              <td><?= $cadastro->roles_id ?></td>
-                							<td><?= anchor("CadastroUser/edit/$cadastro->id", "Editar", "class='btn btn-default waves-effect'") ?>
-                								 | <a href="#" class='confirma_exclusao btn btn-primary waves-effect waves-light' data-id="<?= $cadastro->id ?>" data-nome="<?= $cadastro->name ?>" />Excluir</a></td>
+                							<td><?= $cadastro->ip_atual ?></td>
+                              <td><?= $cadastro->setor ?></td>
+                              <td><?= $cadastro->processador ?></td>
+                              <td><?= $cadastro->memoria ?></td>
+                							<td><?= anchor("CadastroComputer/edit/$cadastro->id", "Editar", "class='btn btn-default waves-effect'") ?>
+                								 | <a href="#" class='confirma_exclusao btn btn-primary waves-effect waves-light' data-id="<?= $cadastro->id ?>" data-nome="<?= $cadastro->ip_atual ?>" />Excluir</a></td>
                 						</tr>
                 						<? endforeach; ?>
                           </tbody>
@@ -85,17 +83,17 @@
         			$('.confirma_exclusao').on('click', function(e) {
         			    e.preventDefault();
 
-        			    var name = $(this).data('name');
+        			    var name = $(this).data('ip_atual');
         			    var id = $(this).data('id');
 
-        			    $('#modal_confirmation').data('name', name);
+        			    $('#modal_confirmation').data('ip_atual', ip_atual);
         			    $('#modal_confirmation').data('id', id);
         			    $('#modal_confirmation').modal('show');
         			});
 
         			$('#modal_confirmation').on('show.bs.modal', function () {
-        			  var name = $(this).data('name');
-        			  $('#nome_exclusao').text(name);
+        			  var ip_atual = $(this).data('ip_atual');
+        			  $('#nome_exclusao').text(ip_atual);
         			});
 
         			$('#btn_excluir').click(function(){
